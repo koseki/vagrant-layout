@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'vagrant/clickable/version'
+require 'vagrant-clickable/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "vagrant-clickable"
-  spec.version       = Vagrant::Clickable::VERSION
+  spec.version       = VagrantPlugins::Clickable::VERSION
   spec.authors       = ["KOSEKI Kengo"]
   spec.email         = ["koseki@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{vagrant clickable plugin}
+  spec.description   = %q{vagrant clickable plugin}
   spec.homepage      = ""
   spec.license       = "MIT"
 
