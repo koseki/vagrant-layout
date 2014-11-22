@@ -5,7 +5,6 @@ group :development do
 end
 
 group :plugins do
-  gem "vagrant-clickable", path: "."
+  gemspec
+  # gem "vagrant-clickable", path: "."
 end
-
-gemspec
