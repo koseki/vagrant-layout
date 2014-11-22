@@ -20,3 +20,15 @@ tmp
 *.o
 *.a
 mkmf.log
+
+*~
+\#*
+.\#*
+tmp
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.project
+*.ignore
+.vagrant
