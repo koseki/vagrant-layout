@@ -9,7 +9,7 @@ module VagrantPlugins
       DESC
 
       command('clickable') do
-        require File.expand_path('../command', __FILE__)
+        require_relative 'command'
         Command
       end
     end
