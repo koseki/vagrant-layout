@@ -1,0 +1,8 @@
+LineLength:
+  Max: 119
+
+ClassLength:
+  Max: 500
+
+MethodLength:
+  Max: 50
