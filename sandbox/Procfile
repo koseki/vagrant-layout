@@ -1,1 +1,1 @@
-nginx: nginx -p . -c conf/nginx.conf
+nginx: nginx -p . -c config/nginx.conf

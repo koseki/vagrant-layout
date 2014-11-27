@@ -13,24 +13,22 @@ fi
 
 echo "current provisioning version: $CURRENT_VERSION"
 
-# Version 1: basic settings
-# VERSION=1
-# if [ $CURRENT_VERSION -lt $VERSION ]; then
-#   echo "--- $VERSION ---"
-#
-#   # localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
-#
-#   echo $VERSION > $VERSION_FILE
-# fi
-
-<<'COMMENT'
-# Version 0: do something.
-VERSION=0
+# Version 1: epel
+VERSION=1
 if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo "--- $VERSION ---"
+  rpm --import https://fedoraproject.org/static/0608B895.txt
+  rpm -Uvh http://download-i2.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+  echo $VERSION > $VERSION_FILE
+fi
 
-  # do something.
+# Version 2: nginx
+VERSION=2
+if [ $CURRENT_VERSION -lt $VERSION ]; then
+  yum install -y -v nginx --enablerepo=epel
+
+  # To stop 'could not open error log file' alert when starting nginx.
+  chmod 777 /var/log/nginx
 
   echo $VERSION > $VERSION_FILE
 fi
-COMMENT
