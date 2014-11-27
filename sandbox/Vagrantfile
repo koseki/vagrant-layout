@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   custom_log = ENV['CUSTOM_VAGRANT_LOG'].to_i == 1
 
   # Using 32bit OS because VirtualBox doesn't support nested VT-x virtualization.
-  # OSX host -> Windows Guest(64bit) -> CentOS guest(32bit)
+  # OSX Host -> Windows Guest(64bit) -> CentOS Guest(32bit)
   #
   # https://www.virtualbox.org/ticket/4032
   # http://heroween.hateblo.jp/entry/2014/05/28/125451

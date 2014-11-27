@@ -1,0 +1,1 @@
+nginx: nginx -p . -c conf/nginx.conf
