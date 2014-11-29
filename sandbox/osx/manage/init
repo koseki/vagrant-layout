@@ -1,0 +1,3 @@
+if [ -f config/vagrant_proxy.conf ]; then
+   source config/vagrant_proxy.conf
+fi
