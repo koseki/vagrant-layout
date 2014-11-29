@@ -6,5 +6,5 @@ end
 
 group :plugins do
   gemspec
-  # gem "vagrant-clickable", path: "."
+  # gem "vagrant-layout", path: "."
 end

@@ -5,7 +5,7 @@ require 'open-uri'
 require_relative 'tar_gz'
 
 module VagrantPlugins
-  module Clickable
+  module Layout
     #
     # Command implementation
     # https://docs.vagrantup.com/v2/plugins/commands.html
@@ -17,7 +17,7 @@ module VagrantPlugins
 
       def execute
         @opts = OptionParser.new do |o|
-          o.banner = 'Usage: vagrant clickable init [gist-url]'
+          o.banner = 'Usage: vagrant layout init [gist-url]'
           o.separator ''
         end
 
