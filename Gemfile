@@ -7,5 +7,5 @@ end
 
 group :plugins do
   gemspec
-  # gem "vagrant-layout", path: "."
+  # gem 'vagrant-layout', path: '.'
 end
