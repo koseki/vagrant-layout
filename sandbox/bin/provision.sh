@@ -43,8 +43,22 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo $VERSION > $VERSION_FILE
 fi
 
-# Version 4: php
+# Version 4: mysql
 VERSION=4
+if [ $CURRENT_VERSION -lt $VERSION ]; then
+  echo "--- $VERSION ---"
+
+  yum install -y -v mysql-server mysql-devel
+
+  chmod 777 /var/log/nginx
+  chkconfig --level 2345 mysqld on
+  service mysqld start
+
+  echo $VERSION > $VERSION_FILE
+fi
+
+# Version 5: php
+VERSION=5
 if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo "--- $VERSION ---"
 
