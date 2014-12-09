@@ -46,3 +46,25 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
 
   echo $VERSION > $VERSION_FILE
 fi
+
+# Version 4: ruby
+VERSION=4
+if [ $CURRENT_VERSION -lt $VERSION ]; then
+  echo "--- $VERSION ---"
+
+  RUBY_INSTALL_VERSION=0.5.0
+  RUBY_INSTALL=ruby-install-$RUBY_INSTALL_VERSION
+  RUBY_INSTALL_URL=https://github.com/postmodern/ruby-install/archive/v$RUBY_INSTALL_VERSION.tar.gz
+
+  curl -L $RUBY_INSTALL_URL > $RUBY_INSTALL.tar.gz
+  tar -xzvf $RUBY_INSTALL.tar.gz
+  cd $RUBY_INSTALL && make install
+  rm -rf $RUBY_INSTALL.tar.gz $RUBY_INSTALL
+
+  ruby-install -i /usr/local ruby 2.0.0 -- --disable-install-doc
+  echo 'install: --no-rdoc --no-ri' >> /usr/local/etc/gemrc
+
+  gem install bundler
+
+  echo $VERSION > $VERSION_FILE
+fi
