@@ -5,7 +5,7 @@ VAGRANTFILE_API_VERSION = '2'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  project_name = 'TODO_your_project_name'
+  project_name = '' # TODO: set your project name
 
   custom_log = ENV['CUSTOM_VAGRANT_LOG'].to_i == 1
 
@@ -65,7 +65,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder '..', '/vagrant'
 
   config.vm.provider :virtualbox do |vb|
-    vb.name = "#{ project_name }_sandbox"
+    vb.name = "#{ project_name }_sandbox" unless project_name.empty?
     vb.customize ['modifyvm', :id, '--memory', '1024']
     # vb.gui = true
   end
