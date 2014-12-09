@@ -1,1 +1,2 @@
 nginx: nginx -p . -c config/nginx.conf
+error.log: tail -n 0 -f logs/error.log
