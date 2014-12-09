@@ -19,11 +19,11 @@ http {
   keepalive_timeout  65;
 
   access_log            logs/access.log combined;
-  client_body_temp_path tmp;
-  proxy_temp_path       tmp;
-  fastcgi_temp_path     tmp;
-  uwsgi_temp_path       tmp;
-  scgi_temp_path        tmp;
+  client_body_temp_path logs/tmp;
+  proxy_temp_path       logs/tmp;
+  fastcgi_temp_path     logs/tmp;
+  uwsgi_temp_path       logs/tmp;
+  scgi_temp_path        logs/tmp;
 
   server {
     listen 8080;
@@ -32,7 +32,7 @@ http {
     index  index.html index.htm;
 
     location / {
-      root   ../static/htdocs;
+      root   PROJECT_ROOT/static/htdocs;
     }
 
     location /favicon.ico {

@@ -1,2 +1,6 @@
+.vagrant
 /logs/*
-/tmp/*
+/config/nginx.conf
+/config/vagrant_ip.conf
+/config/vagrant_proxy.conf
+/config/vagrant_proxy.bat
