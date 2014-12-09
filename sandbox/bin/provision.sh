@@ -22,13 +22,36 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo $VERSION > $VERSION_FILE
 fi
 
-# Version 2: nginx
+# Version 2: remi
 VERSION=2
 if [ $CURRENT_VERSION -lt $VERSION ]; then
+  echo "--- $VERSION ---"
+  rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+  echo $VERSION > $VERSION_FILE
+fi
+
+# Version 3: nginx
+VERSION=3
+if [ $CURRENT_VERSION -lt $VERSION ]; then
+  echo "--- $VERSION ---"
+
   yum install -y -v nginx --enablerepo=epel
 
   # To stop 'could not open error log file' alert when starting nginx.
   chmod 777 /var/log/nginx
+
+  echo $VERSION > $VERSION_FILE
+fi
+
+# Version 4: php
+VERSION=4
+if [ $CURRENT_VERSION -lt $VERSION ]; then
+  echo "--- $VERSION ---"
+
+  yum install -y -v php php-fpm php-mbstring php-mcrypt php-mysqlnd php-phpunit-PHPUnit --enablerepo=remi --enablerepo=remi-php55
+
+  curl -sS https://getcomposer.org/installer | php
+  mv composer.phar /usr/local/bin/composer
 
   echo $VERSION > $VERSION_FILE
 fi

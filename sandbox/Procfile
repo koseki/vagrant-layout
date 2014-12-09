@@ -1,2 +1,3 @@
+php-fpm: php-fpm -p . -c config/php.ini -F -y config/php-fpm.conf
 nginx: ./bin/nginx.sh
 error.log: tail -n 0 -f logs/error.log

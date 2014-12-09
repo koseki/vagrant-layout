@@ -29,10 +29,16 @@ http {
     listen 8080;
     server_name project.local;
     client_max_body_size 8M;
-    index  index.html index.htm;
+    index  index.html index.htm index.php;
 
     location / {
       root   PROJECT_ROOT/static/htdocs;
+      location ~ \.php$ {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+      }
     }
 
     location /favicon.ico {
