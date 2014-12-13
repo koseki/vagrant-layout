@@ -72,7 +72,7 @@ module VagrantPlugins
 
       def download_github(root, target)
         puts "Downloading: #{ target[1] }"
-        targz = File.join(root, 'base.targz')
+        targz = File.join(root, 'base.tar.gz')
         dest = File.join(root, 'github')
         extract_tgz(target[1], targz, dest)
         first_dir(dest)
