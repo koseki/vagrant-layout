@@ -130,6 +130,10 @@ module VagrantPlugins
       def copy_gist_files(gist_dir, github_dir)
         Dir.chdir(gist_dir) do
           Dir.glob('*').each do |file|
+            if file == 'patch'
+              apply_patch(File.join(gist_dir, 'patch'), github_dir)
+              next
+            end
             dest_file = File.join(github_dir, file.gsub('__', '/'))
             FileUtils.copy_entry(File.join(gist_dir, file), dest_file)
           end
@@ -140,6 +144,12 @@ module VagrantPlugins
         Dir.open(dir).each do |src|
           next if src.to_s =~ /\A(README|\.git|LICENSE|\.\.?\z)/
           FileUtils.cp_r(File.join(dir, src), '.')
+        end
+      end
+
+      def apply_patch(patch_file, github_dir)
+        Dir.chdir(github_dir) do
+          puts %x{git apply -v #{patch_file}}
         end
       end
     end
