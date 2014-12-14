@@ -129,13 +129,17 @@ module VagrantPlugins
 
       def copy_gist_files(gist_dir, github_dir)
         Dir.chdir(gist_dir) do
-          Dir.glob('*').each do |file|
-            if file == 'patch'
-              apply_patch(File.join(gist_dir, 'patch'), github_dir)
-              next
-            end
-            dest_file = File.join(github_dir, file.gsub('__', '/'))
-            FileUtils.copy_entry(File.join(gist_dir, file), dest_file)
+          files = Dir.glob('*')
+          if files.include?('patch')
+            apply_patch(File.join(gist_dir, 'patch'), github_dir)
+            files.delete('patch')
+          end
+          files.each do |file|
+            dest_path = file.gsub('__', '/').gsub('//', '/')
+            next if dest_path =~ %r{\.\.|\r|\n}
+            dest_file = File.join(github_dir, dest_path)
+            FileUtils.mkdir_p(File.dirname(dest_file))
+            FileUtils.cp(File.join(gist_dir, file), dest_file, preserve: true)
           end
         end
       end
