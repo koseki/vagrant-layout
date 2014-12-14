@@ -13,12 +13,26 @@ fi
 
 echo "current provisioning version: $CURRENT_VERSION"
 
-# Version 1: epel
 VERSION=1
 if [ $CURRENT_VERSION -lt $VERSION ]; then
-  echo "--- $VERSION ---"
+  echo "--- $VERSION: init ---"
+
+  ## Locale and timezone
+  # localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+  # echo 'ZONE="Asia/Tokyo"'  > /etc/sysconfig/clock
+  # echo 'UTC=false'         >> /etc/sysconfig/clock
+  # ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+  echo $VERSION > $VERSION_FILE
+fi
+
+VERSION=`expr $VERSION + 1`
+if [ $CURRENT_VERSION -lt $VERSION ]; then
+  echo "--- $VERSION: epel ---"
+
   rpm --import https://fedoraproject.org/static/0608B895.txt
   rpm -Uvh http://download-i2.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+
   echo $VERSION > $VERSION_FILE
 fi
 
@@ -30,10 +44,9 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo $VERSION > $VERSION_FILE
 fi
 
-# Version 3: nginx
-VERSION=3
+VERSION=`expr $VERSION + 1`
 if [ $CURRENT_VERSION -lt $VERSION ]; then
-  echo "--- $VERSION ---"
+  echo "--- $VERSION: nginx ---"
 
   yum install -y -v nginx --enablerepo=epel
 
