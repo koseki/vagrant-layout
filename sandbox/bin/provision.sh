@@ -48,10 +48,9 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo $VERSION > $VERSION_FILE
 fi
 
-# Version 3: mysql
-VERSION=3
+VERSION=`expr $VERSION + 1`
 if [ $CURRENT_VERSION -lt $VERSION ]; then
-  echo "--- $VERSION ---"
+  echo "--- $VERSION: mysql ---"
 
   yum install -y -v mysql-server mysql-devel
 
@@ -62,10 +61,9 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo $VERSION > $VERSION_FILE
 fi
 
-# Version 4: ruby
-VERSION=4
+VERSION=`expr $VERSION + 1`
 if [ $CURRENT_VERSION -lt $VERSION ]; then
-  echo "--- $VERSION ---"
+  echo "--- $VERSION: ruby ---"
 
   RUBY_INSTALL_VERSION=0.5.0
   RUBY_INSTALL=ruby-install-$RUBY_INSTALL_VERSION
