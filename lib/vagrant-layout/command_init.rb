@@ -6,8 +6,7 @@ module VagrantPlugins
     # init command
     #
     class CommandInit
-
-      DEFAULT_REPOSITORY = ['koseki', 'vagrant-layout', 'master']
+      DEFAULT_REPOSITORY = %w{koseki vagrant-layout master}
 
       def initialize(argv)
         @argv = argv
@@ -26,9 +25,7 @@ module VagrantPlugins
       end
 
       def parse_target(target)
-        unless target
-          return github_target(DEFAULT_REPOSITORY)
-        end
+        return github_target(DEFAULT_REPOSITORY) unless target
 
         if target =~ %r{\A(https://gist\.github\.com/[^/]+/[0-9a-f]+)(/(download)?)?}
           url  = Regexp.last_match[1]
@@ -41,7 +38,7 @@ module VagrantPlugins
             url += path
           end
 
-          return [:gist, url]
+          [:gist, url]
         end
 
         target = target.split('/')
@@ -53,12 +50,12 @@ module VagrantPlugins
           target = target[0..3]
         end
 
-        return github_target(target)
+        github_target(target)
       end
 
       def github_target(target)
         url = "https://github.com/#{ target[0] }/#{ target[1] }/archive/#{ target[2] }.tar.gz"
-        return [:github, url]
+        [:github, url]
       end
 
       def download_layout(root, target)
@@ -114,7 +111,7 @@ module VagrantPlugins
             else
               msg = 'Illegal base url. Base URL must be like '
               msg += 'https://github.com/{user}/{repos}/tree/[0-9a-f]{40}'
-              raise Exception.new(msg)
+              fail msg
             end
           end
         end
@@ -136,7 +133,7 @@ module VagrantPlugins
           end
           files.each do |file|
             dest_path = file.gsub('__', '/').gsub('//', '/')
-            next if dest_path =~ %r{\.\.|\r|\n}
+            next if dest_path =~ /\.\.|\r|\n/
             dest_file = File.join(github_dir, dest_path)
             FileUtils.mkdir_p(File.dirname(dest_file))
             FileUtils.cp(File.join(gist_dir, file), dest_file, preserve: true)

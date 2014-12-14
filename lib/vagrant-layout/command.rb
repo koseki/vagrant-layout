@@ -39,7 +39,8 @@ module VagrantPlugins
         end
 
         puts @opts.help unless result == 0
-        return result
+
+        result
       end
     end
   end
