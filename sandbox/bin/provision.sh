@@ -36,10 +36,9 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo $VERSION > $VERSION_FILE
 fi
 
-# Version 2: remi
-VERSION=2
+VERSION=`expr $VERSION + 1`
 if [ $CURRENT_VERSION -lt $VERSION ]; then
-  echo "--- $VERSION ---"
+  echo "--- $VERSION: remi ---"
   rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
   echo $VERSION > $VERSION_FILE
 fi
@@ -56,10 +55,9 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo $VERSION > $VERSION_FILE
 fi
 
-# Version 4: mysql
-VERSION=4
+VERSION=`expr $VERSION + 1`
 if [ $CURRENT_VERSION -lt $VERSION ]; then
-  echo "--- $VERSION ---"
+  echo "--- $VERSION: mysql ---"
 
   yum install -y -v mysql-server mysql-devel
 
@@ -70,10 +68,9 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo $VERSION > $VERSION_FILE
 fi
 
-# Version 5: php
-VERSION=5
+VERSION=`expr $VERSION + 1`
 if [ $CURRENT_VERSION -lt $VERSION ]; then
-  echo "--- $VERSION ---"
+  echo "--- $VERSION: php ---"
 
   yum install -y -v php php-fpm php-mbstring php-mcrypt php-mysqlnd php-phpunit-PHPUnit --enablerepo=remi --enablerepo=remi-php55
 
