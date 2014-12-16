@@ -140,11 +140,32 @@ module VagrantPlugins
         end
       end
 
-      def copy_layout(dir)
-        Dir.open(dir).each do |src|
-          next if src.to_s =~ /\A(README|\.git|LICENSE|\.\.?\z)/
-          FileUtils.cp_r(File.join(dir, src), '.')
+      def copy_layout(source_dir)
+        sources = Dir.chdir(source_dir) { Dir.glob('**/*') }
+        sources.delete_if { |src| src =~ /\A(README|LICENSE|\.git)/ }
+
+        overwrite = []
+        sources.each do |src|
+          if File.exist?(src)
+            overwrite << src
+          end
         end
+
+        unless overwrite.empty?
+          puts 'File already exists in this directory. Please specify -f to overwrite.'
+          overwrite.each { |src| puts "  #{ src }" }
+          return false
+        end
+
+        sources.each do |src|
+          src_path = File.join(source_dir, src)
+          if File.directory?(src_path)
+            FileUtils.mkdir_p(src)
+          else
+            FileUtils.cp(src_path, src, preserve: true)
+          end
+        end
+        true
       end
 
       def apply_patch(patch_file, github_dir)
