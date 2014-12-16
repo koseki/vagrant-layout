@@ -37,8 +37,7 @@ module VagrantPlugins
           else
             url += path
           end
-
-          [:gist, url]
+          return [:gist, url]
         end
 
         target = target.split('/')
