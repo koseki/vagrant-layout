@@ -10,16 +10,18 @@ class TarGz
 
   def extract(source, destination)
     files = []
-    Gem::Package::TarReader.new(Zlib::GzipReader.open(source)) do |tar|
-      dest = nil
-      tar.each do |entry|
-        if entry.full_name == TAR_LONGLINK
-          dest = File.join(destination, entry.read.strip)
-          next
-        end
-        dest ||= File.join(destination, entry.full_name)
-        files << write_entry(entry, dest, files)
+    Zlib::GzipReader.open(source) do |gz|
+      Gem::Package::TarReader.new(gz) do |tar|
         dest = nil
+        tar.each do |entry|
+          if entry.full_name == TAR_LONGLINK
+            dest = File.join(destination, entry.read.strip)
+            next
+          end
+          dest ||= File.join(destination, entry.full_name)
+          files << write_entry(entry, dest, files)
+          dest = nil
+        end
       end
     end
     files
