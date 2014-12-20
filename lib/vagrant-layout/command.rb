@@ -1,8 +1,4 @@
 require 'optparse'
-require 'fileutils'
-require 'tmpdir'
-require 'open-uri'
-require_relative 'tar_gz'
 require_relative 'command_init'
 
 module VagrantPlugins

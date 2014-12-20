@@ -1,4 +1,8 @@
 require 'yaml'
+require 'fileutils'
+require 'tmpdir'
+require 'open-uri'
+require_relative 'tar_gz'
 
 module VagrantPlugins
   module Layout
