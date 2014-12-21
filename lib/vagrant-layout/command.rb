@@ -13,28 +13,32 @@ module VagrantPlugins
       end
 
       def execute
-        @opts = OptionParser.new do |o|
+        opts = { force: false }
+        oparser = OptionParser.new do |o|
           o.banner = 'Usage: vagrant layout init [gist-url]'
+          o.on('-f', '--force', 'Overwrite existing files') do |f|
+            opts[:force] = f
+          end
           o.separator ''
         end
 
-        @argv = parse_options(@opts)
-        if @argv.empty?
-          puts @opts.help
+        opts[:argv] = parse_options(oparser)
+        if opts[:argv].empty?
+          puts oparser.help
           return -1
         end
 
-        command = @argv.shift
+        command = opts[:argv].shift
 
         result = -1
         if command == 'help'
-          puts @opts.help
+          puts oparser.help
           result = 0
         elsif command == 'init'
-          result = CommandInit.new(@argv).execute
+          result = CommandInit.new(opts).execute
         end
 
-        puts @opts.help unless result == 0
+        puts oparser.help unless result == 0
 
         result
       end

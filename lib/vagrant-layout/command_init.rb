@@ -12,12 +12,12 @@ module VagrantPlugins
     class CommandInit
       DEFAULT_REPOSITORY = %w{koseki vagrant-layout master}
 
-      def initialize(argv)
-        @argv = argv
+      def initialize(opts)
+        @opts = opts
       end
 
       def execute
-        target = parse_target(@argv.shift)
+        target = parse_target(@opts[:argv].shift)
         return -1 unless target
 
         Dir.mktmpdir do |root|
@@ -150,15 +150,19 @@ module VagrantPlugins
 
         overwrite = []
         sources.each do |src|
-          if File.exist?(src)
+          if File.exist?(src) && ! File.directory?(src)
             overwrite << src
           end
         end
 
         unless overwrite.empty?
-          puts 'File already exists in this directory. Please specify -f to overwrite.'
-          overwrite.each { |src| puts "  #{ src }" }
-          return false
+          if @opts[:force]
+            overwrite.each { |src| puts "Overwrite: #{ src }" }
+          else
+            puts 'File already exists in this directory. Please specify -f to overwrite.'
+            overwrite.each { |src| puts "  #{ src }" }
+            return false
+          end
         end
 
         sources.each do |src|
