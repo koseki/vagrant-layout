@@ -9,13 +9,13 @@ module VagrantPlugins
     #
     class Command < Vagrant.plugin(2, :command)
       def self.synopsis
-        'TODO: synopsis'
+        'create Vagrant layout files'
       end
 
       def execute
         opts = { force: false }
         oparser = OptionParser.new do |o|
-          o.banner = 'Usage: vagrant layout init [gist-url]'
+          o.banner = 'Usage: vagrant layout init [branch|url]'
           o.on('-f', '--force', 'Overwrite existing files') do |f|
             opts[:force] = f
           end
@@ -23,7 +23,10 @@ module VagrantPlugins
         end
 
         opts[:argv] = parse_options(oparser)
-        if opts[:argv].empty?
+
+        if opts[:argv].nil? # --help
+          return -1
+        elsif opts[:argv].to_a.empty?
           puts oparser.help
           return -1
         end
