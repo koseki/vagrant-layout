@@ -150,9 +150,7 @@ module VagrantPlugins
 
         overwrite = []
         sources.each do |src|
-          if File.exist?(src) && ! File.directory?(src)
-            overwrite << src
-          end
+          overwrite << src if File.exist?(src) && !File.directory?(src)
         end
 
         unless overwrite.empty?
