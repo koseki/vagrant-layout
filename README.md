@@ -1,8 +1,8 @@
-# Vagrant Layout (default)
+# Vagrant Layout (Python)
 
 **See [plugin branch](https://github.com/koseki/vagrant-layout/tree/plugin) for detail.**
 
-This is basic web development environment using [Vagrant](https://www.vagrantup.com/). You can overwrite these files using [Gist](https://gist.github.com/) or just fork.
+This is Python development environment using [Vagrant](https://www.vagrantup.com/). You can overwrite these files using [Gist](https://gist.github.com/) or just fork.
 
 ## Installation
 
@@ -23,6 +23,9 @@ $ vagrant layout init
 `sandbox/bin/provision.sh` will install:
 
  * Nginx
+ * MySQL
+ * Python
+ * virtualenv
 
 ## Contributing
 

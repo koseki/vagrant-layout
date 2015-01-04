@@ -44,3 +44,31 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
 
   echo $VERSION > $VERSION_FILE
 fi
+
+VERSION=`expr $VERSION + 1`
+if [ $CURRENT_VERSION -lt $VERSION ]; then
+  echo "--- $VERSION: python ---"
+
+  yum install -y -v gcc
+
+  PYTHON_VER=2.7.9
+  PYTHON_SHORT_VER=2.7
+
+  cd /usr/local/src
+  wget https://www.python.org/ftp/python/${PYTHON_VER}/Python-${PYTHON_VER}.tgz
+  tar xzf Python-${PYTHON_VER}.tgz
+  cd Python-${PYTHON_VER}
+  ./configure
+  make altinstall
+
+  cd /usr/local/src
+  wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py
+  /usr/local/bin/python${PYTHON_SHORT_VER} get-pip.py
+
+  /usr/local/bin/pip${PYTHON_SHORT_VER} install virtualenv
+
+  mkdir -p /home/vagrant/virtualenv
+  virtualenv -p /usr/local/bin/python${PYTHON_SHORT_VER} /home/vagrant/virtualenv/python${PYTHON_SHORT_VER}
+
+  echo $VERSION > $VERSION_FILE
+fi
