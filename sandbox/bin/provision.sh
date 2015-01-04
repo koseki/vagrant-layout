@@ -79,8 +79,9 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
 
   /usr/local/bin/pip${PYTHON_SHORT_VER} install virtualenv
 
-  mkdir -p /home/vagrant/virtualenv
-  virtualenv -p /usr/local/bin/python${PYTHON_SHORT_VER} /home/vagrant/virtualenv/python${PYTHON_SHORT_VER}
+  mkdir -p /home/vagrant/.virtualenv
+  virtualenv -p /usr/local/bin/python${PYTHON_SHORT_VER} /home/vagrant/.virtualenv/python${PYTHON_SHORT_VER}
+  chown -R vagrant:vagrant /home/vagrant/.virtualenv
 
   echo $VERSION > $VERSION_FILE
 fi
