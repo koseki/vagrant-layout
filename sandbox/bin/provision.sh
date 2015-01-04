@@ -23,15 +23,12 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
   # echo 'UTC=false'         >> /etc/sysconfig/clock
   # ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-  echo $VERSION > $VERSION_FILE
-fi
-
-VERSION=`expr $VERSION + 1`
-if [ $CURRENT_VERSION -lt $VERSION ]; then
-  echo "--- $VERSION: epel ---"
-
+  # Epel
   rpm --import https://fedoraproject.org/static/0608B895.txt
   rpm -Uvh http://download-i2.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+
+  # Basic tools
+  yum install -y -v patch zlib zlib-devel openssl openssl-devel
 
   echo $VERSION > $VERSION_FILE
 fi
