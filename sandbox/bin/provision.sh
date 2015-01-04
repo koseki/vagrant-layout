@@ -51,7 +51,6 @@ if [ $CURRENT_VERSION -lt $VERSION ]; then
 
   yum install -y -v mysql-server mysql-devel
 
-  chmod 777 /var/log/nginx
   chkconfig --level 2345 mysqld on
   service mysqld start
 
