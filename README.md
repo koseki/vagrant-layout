@@ -1,20 +1,22 @@
-# vagrant-layout plugin - Default layout
+# Vagrant Layout (default)
 
-This is basic web development environment using [Vagrant](https://www.vagrantup.com/).
+**See [plugin branch](https://github.com/koseki/vagrant-layout/tree/plugin) for detail.**
 
-See [plugin branch](https://github.com/koseki/vagrant-layout/tree/plugin) for detail. You can overwrite these files using [Gist](https://gist.github.com/) or just fork.
+This is basic web development environment using [Vagrant](https://www.vagrantup.com/). You can overwrite these files using [Gist](https://gist.github.com/) or just fork.
 
 ## Installation
 
-1. Create environment
 ```console
 $ vagrant plugin install vagrant-layout
 $ mkdir your-project-name
 $ cd your-project-name
 $ vagrant layout init
 ```
-2. Double click `sandbox/osx/start.command` or `sandbox/win/start.bat`
-3. Access [http://localhost:8080/](http://localhost:8080/)
+
+## Start VM
+
+1. Double click `sandbox/osx/start.command` or `sandbox/win/start.bat`
+2. Access [http://localhost:8080/](http://localhost:8080/)
 
 ## Provisioning
 
