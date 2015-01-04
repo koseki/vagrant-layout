@@ -47,6 +47,18 @@ fi
 
 VERSION=`expr $VERSION + 1`
 if [ $CURRENT_VERSION -lt $VERSION ]; then
+  echo "--- $VERSION: mysql ---"
+
+  yum install -y -v mysql-server mysql-devel
+
+  chkconfig --level 2345 mysqld on
+  service mysqld start
+
+  echo $VERSION > $VERSION_FILE
+fi
+
+VERSION=`expr $VERSION + 1`
+if [ $CURRENT_VERSION -lt $VERSION ]; then
   echo "--- $VERSION: python ---"
 
   yum install -y -v gcc
