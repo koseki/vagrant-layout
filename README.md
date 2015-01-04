@@ -1,17 +1,28 @@
-# Vagrant::Layout
+# Vagrant Layout (default)
 
-TODO: Write a gem description
+**See [plugin branch](https://github.com/koseki/vagrant-layout/tree/plugin) for detail.**
+
+This is basic web development environment using [Vagrant](https://www.vagrantup.com/). You can overwrite these files using [Gist](https://gist.github.com/) or just fork.
 
 ## Installation
 
-```
+```console
 $ vagrant plugin install vagrant-layout
+$ mkdir your-project-name
+$ cd your-project-name
 $ vagrant layout init
 ```
 
-## Usage
+## Start VM
 
-TODO: Write usage instructions here
+1. Double click `sandbox/osx/start.command` or `sandbox/win/start.bat`
+2. Access [http://localhost:8080/](http://localhost:8080/)
+
+## Provisioning
+
+`sandbox/bin/provision.sh` will install:
+
+ * Nginx
 
 ## Contributing
 
