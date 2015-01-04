@@ -24,7 +24,8 @@ The targets can be one of the:
  * GitHub branch name (`ruby`)
  * GitHub user name and branch name (`koseki/ruby`)
  * GitHub user name, repository name and branch name (`koseki/vagrant-layout/ruby`)
- * GitHub tree URL (`https://github.com/koseki/vagrant-layout/tree/e09768d91387ea4465abb8755a3cd2eb011bee9a`)
+ * GitHub commit URL (`https://github.com/koseki/vagrant-layout/commit/e09768d`)
+ * GitHub tree URL (`https://github.com/koseki/vagrant-layout/tree/e09768d`)
  * Gist URL (`https://gist.github.com/koseki/37f61d9a02b9a48e6651`)
  * Blank. The default target is `koseki/vagrant-layout/master`
 
@@ -75,10 +76,10 @@ $ vagrant layout init ${github_username}/${branch_name}
 $ vagrant layout init ${github_username}/${repository}/${branch_name}
 ```
 
-Download from specific tree.
+Download from specific commit.
 
 ```
-$ vagrant layout init https://github.com/koseki/vagrant-layout/tree/e73c4b2162a9abe2bbce1bf13a5b6b6ec586593d
+$ vagrant layout init https://github.com/koseki/vagrant-layout/commit/e73c4b21
 ```
 
 ## Start VM

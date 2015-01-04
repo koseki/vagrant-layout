@@ -2,6 +2,7 @@ require 'yaml'
 require 'fileutils'
 require 'tmpdir'
 require 'open-uri'
+require_relative 'target'
 require_relative 'tar_gz'
 
 module VagrantPlugins
@@ -10,15 +11,16 @@ module VagrantPlugins
     # init command
     #
     class CommandInit
-      DEFAULT_REPOSITORY = %w{koseki vagrant-layout master}
-
       def initialize(opts)
         @opts = opts
       end
 
       def execute
-        target = parse_target(@opts[:argv].shift)
-        return -1 unless target
+        begin
+          target = Target.new(@opts[:argv].shift)
+        rescue InvalidArgumentException
+          return -1
+        end
 
         Dir.mktmpdir do |root|
           dir = download_layout(root, target)
@@ -28,61 +30,28 @@ module VagrantPlugins
         0
       end
 
-      def parse_target(target)
-        return github_target(DEFAULT_REPOSITORY) unless target
-
-        if target =~ %r{\A(https://gist\.github\.com/[^/]+/[0-9a-f]+)(/(download)?)?}
-          url  = Regexp.last_match[1]
-          path = Regexp.last_match[2]
-          if path == '/'
-            url += 'download'
-          elsif path.to_s == ''
-            url += '/download'
-          else
-            url += path
-          end
-          return [:gist, url]
-        end
-
-        target = target.split('/')
-        if target.length == 1
-          target = [DEFAULT_REPOSITORY[0], DEFAULT_REPOSITORY[1], target[0]]
-        elsif target.length == 2
-          target = [target[0], DEFAULT_REPOSITORY[1], target[1]]
-        elsif target.length >= 4
-          target = target[0..3]
-        end
-
-        github_target(target)
-      end
-
-      def github_target(target)
-        url = "https://github.com/#{ target[0] }/#{ target[1] }/archive/#{ target[2] }.tar.gz"
-        [:github, url]
-      end
-
       def download_layout(root, target)
-        if target[0] == :github
+        if target.type == :github
           return download_github(root, target)
-        elsif target[0] == :gist
+        elsif target.type == :gist
           dir = download_gist(root, target)
           return merge_gist_to_github(root, dir)
         end
       end
 
       def download_github(root, target)
-        puts "Downloading: #{ target[1] }"
+        puts "Downloading: #{ target.url }"
         targz = File.join(root, 'base.tar.gz')
         dest = File.join(root, 'github')
-        extract_tgz(target[1], targz, dest)
+        extract_tgz(target.url, targz, dest)
         first_dir(dest)
       end
 
       def download_gist(root, target)
-        puts "Downloading: #{ target[1] }"
+        puts "Downloading: #{ target.url }"
         targz = File.join(root, 'gist.tar.gz')
         dest = File.join(root, 'gist')
-        extract_tgz(target[1], targz, dest)
+        extract_tgz(target.url, targz, dest)
         first_dir(dest)
       end
 
@@ -106,15 +75,21 @@ module VagrantPlugins
       def merge_gist_to_github(root, gist_dir)
         dotfile = File.join(gist_dir, '.vagrant-layout')
         github_dir = nil
+
         if File.file?(dotfile)
           dot = YAML.load(File.read(dotfile))
           if dot['base']
-            if dot['base'] =~ %r{https://github.com/([-\w]+)/([-\w]+)/tree/([0-9a-f]{40})}
-              github_dir = download_github(root, github_target(Regexp.last_match[1..3]))
+            begin
+              target = Target.new(dot['base'])
+            rescue ArgumentError
+            end
+
+            if target && target.type == :github
+              github_dir = download_github(root, target.url)
             else
-              msg = 'Illegal base url. Base URL must be like '
-              msg += 'https://github.com/{user}/{repos}/tree/[0-9a-f]{40}'
-              fail msg
+              err = 'Illegal base url. Base URL must be like '
+              err += 'https://github.com/{user}/{repos}/(tree|commit)/[0-9a-f]+'
+              fail err
             end
           end
         end
