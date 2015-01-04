@@ -85,7 +85,7 @@ module VagrantPlugins
             end
 
             if target && target.type == :github
-              github_dir = download_github(root, target.url)
+              github_dir = download_github(root, target)
             else
               err = 'Illegal base url. Base URL must be like '
               err += 'https://github.com/{user}/{repos}/(tree|commit)/[0-9a-f]+'
