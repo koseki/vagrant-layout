@@ -10,7 +10,7 @@ This is PHP development environment using [Vagrant](https://www.vagrantup.com/).
 $ vagrant plugin install vagrant-layout
 $ mkdir your-project-name
 $ cd your-project-name
-$ vagrant layout init
+$ vagrant layout init php
 ```
 
 ## Start VM
