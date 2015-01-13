@@ -73,15 +73,18 @@ module VagrantPlugins
       end
 
       def merge_gist_to_github(root, gist_dir)
-        dotfile = File.join(gist_dir, '.vagrant-layout')
+        readme = File.join(gist_dir, 'README.md')
         github_dir = nil
 
-        if File.file?(dotfile)
-          dot = YAML.load(File.read(dotfile))
-          if dot['base']
+        if File.file?(readme)
+          src = File.read(readme)
+          src = src.split(/^---$/).last
+          config = YAML.load(src)
+          if config['base']
             begin
-              target = Target.new(dot['base'])
+              target = Target.new(config['base'])
             rescue ArgumentError
+              target = nil
             end
 
             if target && target.type == :github
