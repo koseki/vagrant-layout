@@ -154,7 +154,7 @@ module VagrantPlugins
 
       def apply_patch(patch_file, github_dir)
         Dir.chdir(github_dir) do
-          puts %x{git apply -v #{patch_file}}
+          puts %x{git -c core.eol=lf -c core.autocrlf=input apply -v #{patch_file}}
         end
       end
     end
