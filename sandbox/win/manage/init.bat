@@ -1,5 +1,7 @@
-@rem Do not include space in VAGRANT_HOME. Do not use Japanese(CJK?) account name.
-@rem https://github.com/mitchellh/vagrant/issues/4351
+@rem Do not use non-ASCII character and ASCII special character in
+@rem VAGRANT_HOME, VirtualBox machine folder and your project directory.
+@rem See https://github.com/mitchellh/vagrant/issues/4966
+
 set VAGRANT_HOME=C:\vagrant
 
 @rem ssh command required.
